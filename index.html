@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расписание IPE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #loading-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 64px;
+  font-weight: bold;
+  text-align: center;
+}
+        .auditory {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .lesson {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="header"></h1>
+    <label for="datePicker">Выберите дату: </label>
+    <input type="date" id="datePicker">
+    <div id="loading-indicator">Загрузка...</div>
+    <div id="schedules"></div>
+    <script src="script.js"></script>
+    
+</body>
+</html>
