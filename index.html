@@ -8,16 +8,8 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            
         }
-        #loading-indicator {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 64px;
-  font-weight: bold;
-  text-align: center;
-}
         .auditory {
             margin-top: 20px;
             padding: 10px;
@@ -26,15 +18,27 @@
         .lesson {
             margin: 5px 0;
         }
+        #loading {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 18px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
     </style>
 </head>
 <body>
     <h1 id="header"></h1>
     <label for="datePicker">Выберите дату: </label>
     <input type="date" id="datePicker">
-    <div id="loading-indicator">Загрузка...</div>
+    <div id="loading">Загрузка ⏳</div>
     <div id="schedules"></div>
     <script src="script.js"></script>
-    
 </body>
 </html>

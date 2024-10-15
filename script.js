@@ -1,7 +1,7 @@
-const dayNames = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
+const dayNames = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
 const IPEauditories = ["502-2 к.", "601-2 к.", "603-2 к.", "604-2 к.", "605-2 к.", "607-2 к.", "611-2 к.", "613-2 к.", "615-2 к."];
 
-document.getElementById('header').innerText = '-------------- Расписание IPE -------------';
+
 
 async function fetchJson(url) {
     const response = await fetch(url);
@@ -71,25 +71,14 @@ function printDict(container, dict) {
         container.appendChild(lessonDiv);
     }
 }
-// Add a loading indicator function
-function showLoadingIndicator() {
-    const loadingIndicator = document.getElementById('loading-indicator');
-    loadingIndicator.style.display = 'block';
-  }
-  
-  function hideLoadingIndicator() {
-    const loadingIndicator = document.getElementById('loading-indicator');
-    loadingIndicator.style.display = 'none';
-  }
-  
+
 async function printSchedulesIPE(selectedDate) {
-    showLoadingIndicator();
     const { teachers, teacherSchedules } = await getTeacherInfo();
     const currentWeek = await fetchJson('https://iis.bsuir.by/api/v1/schedule/current-week');
     const schedulesContainer = document.getElementById('schedules');
-    schedulesContainer.innerHTML = '';// Clear previous schedules
+    schedulesContainer.innerHTML = ''; // Clear previous schedules
 
-    for (const aud of IPEauditories) {
+       for (const aud of IPEauditories) {
         const audContainer = document.createElement('div');
         audContainer.className = 'auditory';
         audContainer.innerText = `-------------------------${aud}-------------------------`;
@@ -103,16 +92,26 @@ async function printSchedulesIPE(selectedDate) {
 
         printDict(audContainer, sortedSchedule);
     }
-    hideLoadingIndicator(); // Hide the loading indicator
 }
 
-// Update the event listener to show the loading indicator
-document.getElementById('datePicker').addEventListener('change', (event) => {
+document.getElementById('datePicker').addEventListener('change', async (event) => {
     const selectedDate = new Date(event.target.value);
-    printSchedulesIPE(selectedDate);
+    document.getElementById('loading').style.display = 'block'; // Показываем окно "Загрузка..."
+    try {
+      await printSchedulesIPE(selectedDate);
+    } finally {
+      document.getElementById('loading').style.display = 'none'; // Скрываем окно "Загрузка..."
+    }
   });
 
 // Initialize with the current date
 const initialDate = new Date();
 document.getElementById('datePicker').valueAsDate = initialDate;
-printSchedulesIPE(initialDate);
+document.getElementById('loading').style.display = 'block'; // Показываем окно "Загрузка..."
+(async () => {
+  try {
+    await printSchedulesIPE(initialDate);
+  } finally {
+    document.getElementById('loading').style.display = 'none'; // Скрываем окно "Загрузка..."
+  }
+})();
