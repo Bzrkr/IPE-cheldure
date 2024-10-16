@@ -115,3 +115,14 @@ document.getElementById('loading').style.display = 'block'; // Показыва�
     document.getElementById('loading').style.display = 'none'; // Скрываем окно "Загрузка..."
   }
 })();
+
+function copyAndSend() {
+    const textToCopy = document.getElementById('schedules').innerText;
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        alert('Текст скопирован!');
+        const telegramLink = `tg://msg?text=${encodeURIComponent(textToCopy)}`;
+        window.open(telegramLink, '_blank');
+    }).catch(err => {
+        console.error('Ошибка при копировании текста: ', err);
+    });
+}
